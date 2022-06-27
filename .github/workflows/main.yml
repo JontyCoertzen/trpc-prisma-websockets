@@ -3,22 +3,14 @@ on: [push]
 jobs:
   e2e:
     env:
-      DATABASE_URL: postgresql://postgres:@localhost:5432/trpcdb
+      DATABASE_URL: ${{ env.DATABASE_URL }}
       NODE_ENV: test
-      NEXTAUTH_SECRET: supersecret
+      NEXTAUTH_SECRET: ${{ env.NEXTAUTH_SECRET }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         node: ['14.x']
         os: [ubuntu-latest]
-    services:
-      postgres:
-        image: postgres:12.1
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_DB: trpcdb
-        ports:
-          - 5432:5432
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
