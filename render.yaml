@@ -3,6 +3,7 @@ services:
     name: trpc-websockets
     env: node
     plan: free
+    region: frankfurt
     buildCommand: yarn --prod=false &&
       yarn build
     startCommand: yarn start
@@ -12,12 +13,6 @@ services:
         value: production
 
       - key: DATABASE_URL
-        fromDatabase:
-          name: trpc-websockets-db
-          property: connectionString
+        sync: false
 
       - fromGroup: trpc-websockets
-
-databases:
-  - name: trpc-websockets-db
-    plan: free
